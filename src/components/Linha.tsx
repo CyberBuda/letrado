@@ -1,32 +1,48 @@
 import React, { useEffect, useRef } from 'react';
 import './Linha.css';
 
-function Linha() {
+interface LinhaProps {
+  valor: string;
+  ativa: boolean;
+  onLetraChange?: (index: number, letra: string) => void;
+}
+
+function Linha({ valor, ativa, onLetraChange }: LinhaProps) {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
   //handle change para cada input
-  const handleChange = (e: any, index: number) => {
-    const input = e.target;
-    input.classList.add('pulsar');
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    let letra = e.target.value.toUpperCase();
 
-    setTimeout(() => {
-      input.classList.remove('pulsar');
-    }, 200);
+    if (letra.length > 1) {
+      letra = letra.slice(-1);
+    }
 
-    const value = input.value;
+    if (onLetraChange) {
+      onLetraChange(index, letra);
+    }
 
-    if (value && index < inputsRef.current.length - 1) {
-      inputsRef.current[index + 1]?.focus(); // Vai para o próximo input, caso seja uma letra digitada
+    if (letra && index < inputsRef.current.length - 1) {
+      inputsRef.current[index + 1]?.focus();
     }
   };
 
-  const handleKeyDown = (e: any, index: number) => {
-    if (e.key === 'Backspace' && !e.target.value && index > 0) {
-      inputsRef.current[index - 1]?.focus(); // Volta para o input anterior caso a tecla digitada seja um backspace
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === 'Backspace' && !valor[index] && index > 0) {
+      inputsRef.current[index - 1]?.focus();
     }
   };
 
-  useEffect(() => { inputsRef.current[0]?.focus(); }, []);
+  //Foca na linha ativa
+  useEffect(() => {
+    if (ativa) {
+      inputsRef.current[0]?.focus();
+    }
+  }, [ativa]);
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.target.select(); // Seleciona automaticamente o conteúdo inteiro
+  };
 
   return (
     <div className="linha">
@@ -36,9 +52,12 @@ function Linha() {
           type="text"
           maxLength={1}
           className="letra-input"
+          value={valor[i] || ''}
+          disabled={!ativa}
           ref={(el) => {inputsRef.current[i] = el}}
           onChange={(e) => handleChange(e, i)}
           onKeyDown={(e) => handleKeyDown(e, i)}
+          onFocus={handleFocus}
         />
       ))}
     </div>

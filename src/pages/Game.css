@@ -1,0 +1,17 @@
+.titulo {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.game-container {
+    align-items: center;
+}
+
+.imagem {
+    align-items: center;
+}
+
+.botao-verificar {
+    background-color: green;
+    color: white;
+    margin-top: 20px;
+}

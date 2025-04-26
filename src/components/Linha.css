@@ -16,6 +16,11 @@
     outline: none;
   }
 
+  .letra-input:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px #4caf50; /* Adiciona brilho */
+  }
+
 /* Animação de pulso */
 @keyframes pulse {
     0% {
@@ -29,7 +34,7 @@
     }
   }
   
-  /* Aplicar a animação */
+  /* Aplica a animação de pulso */
   .letra-input.pulsar {
     animation: pulse 0.2s ease-in-out;
   }

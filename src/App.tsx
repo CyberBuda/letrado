@@ -1,21 +1,13 @@
 import './App.css'
-import Linha from './components/linha'
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Game from './pages/Game';
 
-function App() {
-
+export default function App() {
   return (
-    <>
-    <h1>Letrado!</h1>
-
-    <Linha />
-    <Linha />
-    <Linha />
-    <Linha />
-    <Linha />
-    <Linha />
-
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/game" element={<Game />} />
+    </Routes>
+  );
 }
-
-export default App
