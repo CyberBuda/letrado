@@ -20,6 +20,29 @@ export default function Game() {
           console.log(tentativaAtual)
     };
 
+    const verificarTentativa = () => {
+        const palavraJogada = tentativaAtual.join('')
+
+        if (palavraJogada.length < 5) {
+            alert ('Complete a palavra antes de verificar!')
+            return
+        }
+
+        if (palavraJogada === palavraSecreta) {
+            alert ('Parabéns! Você acertou a palavra secreta!')
+            return
+        }
+
+        const novasTentativas = [...tentativas];
+        novasTentativas[linhaAtual] = tentativaAtual;
+      
+        setTentativas(novasTentativas);
+        setTentativaAtual(Array(5).fill(''));
+        setLinhaAtual(linhaAtual + 1);
+
+
+    }
+
     return (
         <div className="game-container">
             <img src={nerdcat} className='imagem' />
@@ -31,10 +54,11 @@ export default function Game() {
                     valor={idx === linhaAtual ? tentativaAtual : tentativa}
                     ativa={idx === linhaAtual}
                     onLetraChange={idx === linhaAtual ? handleLetraChange : undefined}
+                    onEnter={verificarTentativa}
                 />
             ))}
 
-            <button onClick={() => setLinhaAtual(linhaAtual + 1)} className='botao-verificar'>
+            <button onClick={ verificarTentativa } className='botao-verificar'>
                 Verificar
             </button>
 

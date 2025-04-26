@@ -5,9 +5,10 @@ interface LinhaProps {
   valor: string[];
   ativa: boolean;
   onLetraChange?: (index: number, letra: string) => void;
+  onEnter?: () => void;
 }
 
-function Linha({ valor, ativa, onLetraChange }: LinhaProps) {
+function Linha({ valor, ativa, onLetraChange, onEnter }: LinhaProps) {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
   //handle change para cada input
@@ -42,6 +43,11 @@ function Linha({ valor, ativa, onLetraChange }: LinhaProps) {
       e.preventDefault();
       if (index < inputsRef.current.length - 1) {
         inputsRef.current[index + 1]?.focus();
+      }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (onEnter) {
+        onEnter();
       }
     }
   };
