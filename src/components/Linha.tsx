@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import './Linha.css';
 
 interface LinhaProps {
-  valor: string;
+  valor: string[];
   ativa: boolean;
   onLetraChange?: (index: number, letra: string) => void;
 }
@@ -12,24 +12,37 @@ function Linha({ valor, ativa, onLetraChange }: LinhaProps) {
 
   //handle change para cada input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    let letra = e.target.value.toUpperCase();
-
-    if (letra.length > 1) {
-      letra = letra.slice(-1);
-    }
-
+    const letra = e.target.value.toUpperCase().slice(-1); // pega sempre só a última letra
+  
     if (onLetraChange) {
       onLetraChange(index, letra);
     }
-
+  
+    // Mover o foco depois da atualização de estado
     if (letra && index < inputsRef.current.length - 1) {
-      inputsRef.current[index + 1]?.focus();
+      setTimeout(() => {
+        inputsRef.current[index + 1]?.focus();
+      }, 0); // joga o foco para o próximo evento da fila
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === 'Backspace' && !valor[index] && index > 0) {
-      inputsRef.current[index - 1]?.focus();
+    if (e.key === 'Backspace') {
+      e.preventDefault(); // Impede o comportamento padrão
+  
+      if (onLetraChange) {
+        onLetraChange(index, ''); // Apaga apenas o valor atual
+      }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (index > 0) {
+        inputsRef.current[index - 1]?.focus();
+      }
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      if (index < inputsRef.current.length - 1) {
+        inputsRef.current[index + 1]?.focus();
+      }
     }
   };
 
