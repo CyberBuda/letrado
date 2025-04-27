@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import './Linha.css';
+import Letra from '../models/Letra'
 
 interface LinhaProps {
-  valor: string[];
+  valor: Letra[];
   ativa: boolean;
   onLetraChange?: (index: number, letra: string) => void;
   onEnter?: () => void;
@@ -70,8 +71,8 @@ function Linha({ valor, ativa, onLetraChange, onEnter }: LinhaProps) {
           key={i}
           type="text"
           maxLength={1}
-          className="letra-input"
-          value={valor[i] || ''}
+          className={`letra-input ${valor[i].estado ?? ''}`}
+          value={valor[i].valor || ''}
           disabled={!ativa}
           ref={(el) => {inputsRef.current[i] = el}}
           onChange={(e) => handleChange(e, i)}

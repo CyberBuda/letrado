@@ -1,0 +1,1 @@
+export type EstadoDoJogo = 'jogando' | 'vitoria' | 'derrota';
