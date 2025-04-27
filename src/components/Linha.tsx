@@ -16,6 +16,10 @@ function Linha({ valor, ativa, onLetraChange, onEnter }: LinhaProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const letra = e.target.value.toUpperCase().slice(-1); // pega sempre só a última letra
   
+    if (!/^[A-Z]$/.test(letra)) {
+      return; // ignora caracteres inválidos
+    }
+
     if (onLetraChange) {
       onLetraChange(index, letra);
     }

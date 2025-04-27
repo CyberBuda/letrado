@@ -1,19 +1,25 @@
 import Linha from '../components/Linha';
-import nerdcat from '../assets/nerdcat.jpg'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Game.css'
 import { EstadoLetra } from '../enums/EstadoLetra';
 import Letra from '../models/Letra'
 import { EstadoDoJogo } from '../models/EstadoDoJogo';
+import { listaDePalavras } from '../assets/palavras';
 
 export default function Game() {
-    const palavraSecreta = "REACT";
     const tentativasMaximas = 6;
 
     const [estadoDoJogo, setEstadoDoJogo] = useState<EstadoDoJogo>('jogando');
     const [tentativas, setTentativas] = useState<Letra[][]>(Array(tentativasMaximas).fill(null).map(() => Array(5).fill(''))); //Cria um array vazio de 6 elementos e preenche todos com ''. Cada elemento será uma linha
     const [tentativaAtual, setTentativaAtual] = useState<Letra[]>(Array(5).fill(''));
     const [linhaAtual, setLinhaAtual] = useState(0);
+    const [palavraSecreta, setPalavraSecreta] = useState<String>('')
+
+    const sortearPalavra = (): string => {
+        const indice = Math.floor(Math.random() * listaDePalavras.length);
+        console.log(listaDePalavras[indice])
+        return listaDePalavras[indice];
+    };
 
     const handleLetraChange = (index: number, letra: string) => {
         setTentativaAtual((prev) => {
@@ -21,11 +27,9 @@ export default function Game() {
             novaTentativa[index] = { valor: letra, estado: null };
             return novaTentativa;
         });
-        console.log(tentativaAtual)
     };
 
     const verificarTentativa = () => {
-        const palavraSecreta = 'REACT';
         const palavraJogada = tentativaAtual.map(l => l.valor).join('');
 
         if (palavraJogada.length < 5) {
@@ -47,7 +51,7 @@ export default function Game() {
             return { ...letra, estado: null };
         });
 
-        const resultadoFinal = resultadoTemp.map((letra, idx) => {
+        const resultadoFinal = resultadoTemp.map((letra) => {
             if (letra.estado === EstadoLetra.Correct) {
                 return letra;
             }
@@ -61,24 +65,43 @@ export default function Game() {
         const novasTentativas = [...tentativas];
         novasTentativas[linhaAtual] = resultadoFinal;
 
-        setTentativas(novasTentativas);
-        setTentativaAtual(Array(5).fill({ valor: '', estado: null }));
-        setLinhaAtual(linhaAtual + 1);
-
         if (palavraJogada === palavraSecreta) {
             setEstadoDoJogo('vitoria')
+            return
         }
 
         if (linhaAtual + 1 >= tentativasMaximas) {
             setEstadoDoJogo('derrota');
             return;
         }
+
+        setTentativas(novasTentativas);
+        setTentativaAtual(Array(5).fill({ valor: '', estado: null }));
+        setLinhaAtual(linhaAtual + 1);
+
+    }
+
+    useEffect(() => {
+        setPalavraSecreta(sortearPalavra());
+    }, []);
+
+    const jogarNovamente = () => {
+        setTentativas(Array(tentativasMaximas).fill(null).map(() => Array(5).fill({ valor: '', estado: null })));
+        setTentativaAtual(Array(5).fill({ valor: '', estado: null }));
+        setLinhaAtual(0);
+        setEstadoDoJogo('jogando');
+        setPalavraSecreta(sortearPalavra());
+    }
+
+    const imagens = {
+        jogando: '/imagens/nerdcat.jpg',
+        vitoria: '/imagens/eba.jpg',
+        derrota: '/imagens/gato-missil.gif',
     }
 
     return (
         <div className="game-container">
-            <img src={nerdcat} className='imagem' />
-            <h1 className='titulo'>Letrado!</h1>
+            <img src={imagens[estadoDoJogo]} className='imagem' />
 
             {estadoDoJogo === 'vitoria' && <h2>🎉 Você acertou a palavra!</h2>}
             {estadoDoJogo === 'derrota' && <h2>😢 Você perdeu! A palavra era: {palavraSecreta}</h2>}
@@ -94,9 +117,19 @@ export default function Game() {
                 />
             ))}
 
-            <button onClick={verificarTentativa} className='botao-verificar' disabled={!(estadoDoJogo === 'jogando')}>
-                Verificar
-            </button>
+            {estadoDoJogo === 'jogando' &&
+                <button onClick={verificarTentativa} className='botao-verificar'>
+                    Verificar
+                </button>
+            }
+
+            {estadoDoJogo !== 'jogando' &&
+                <button onClick={jogarNovamente} className='botao-jogar-novamente'>
+                    Jogar Novamente
+                </button>
+            }
+
+
 
         </div>
     );
