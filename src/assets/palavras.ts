@@ -41,7 +41,6 @@ export const listaDePalavras = [
     'PISCA',
     'GARRA',
     'TOURO',
-    'TAPAS',
     'GRIFO',
     'BRISA',
     'FREIO',

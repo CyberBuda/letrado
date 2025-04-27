@@ -1,15 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import './Linha.css';
 import Letra from '../models/Letra'
+import { EstadoDoJogo } from '../models/EstadoDoJogo';
 
 interface LinhaProps {
   valor: Letra[];
   ativa: boolean;
+  estadoJogo?: EstadoDoJogo
   onLetraChange?: (index: number, letra: string) => void;
   onEnter?: () => void;
 }
 
-function Linha({ valor, ativa, onLetraChange, onEnter }: LinhaProps) {
+function Linha({ valor, ativa, estadoJogo, onLetraChange, onEnter }: LinhaProps) {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
   //handle change para cada input
@@ -33,11 +35,11 @@ function Linha({ valor, ativa, onLetraChange, onEnter }: LinhaProps) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === 'Backspace') {
-      e.preventDefault(); // Impede o comportamento padrão
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+      e.preventDefault(); 
   
       if (onLetraChange) {
-        onLetraChange(index, ''); // Apaga apenas o valor atual
+        onLetraChange(index, '');
       }
     } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
@@ -65,7 +67,7 @@ function Linha({ valor, ativa, onLetraChange, onEnter }: LinhaProps) {
   }, [ativa]);
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.target.select(); // Seleciona automaticamente o conteúdo inteiro
+    e.target.select(); // Seleciona automaticamente o conteúdo inteiro do input
   };
 
   return (
@@ -77,7 +79,7 @@ function Linha({ valor, ativa, onLetraChange, onEnter }: LinhaProps) {
           maxLength={1}
           className={`letra-input ${valor[i].estado ?? ''}`}
           value={valor[i].valor || ''}
-          disabled={!ativa}
+          disabled={!ativa || !(estadoJogo == 'jogando')}
           ref={(el) => {inputsRef.current[i] = el}}
           onChange={(e) => handleChange(e, i)}
           onKeyDown={(e) => handleKeyDown(e, i)}

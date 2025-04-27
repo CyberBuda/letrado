@@ -66,8 +66,11 @@ export default function Game() {
         novasTentativas[linhaAtual] = resultadoFinal;
 
         if (palavraJogada === palavraSecreta) {
+            tentativaAtual.map(letra => ({
+              ...letra,
+              estado: EstadoLetra.Correct,
+            }))
             setEstadoDoJogo('vitoria')
-            return
         }
 
         if (linhaAtual + 1 >= tentativasMaximas) {
@@ -112,6 +115,7 @@ export default function Game() {
                     key={idx}
                     valor={idx === linhaAtual ? tentativaAtual : tentativa}
                     ativa={idx === linhaAtual}
+                    estadoJogo={estadoDoJogo}
                     onLetraChange={idx === linhaAtual ? handleLetraChange : undefined}
                     onEnter={verificarTentativa}
                 />
