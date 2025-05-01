@@ -45,81 +45,78 @@ export default function Game() {
 
     const validarEntrada = (palavra: string) => {
         if (palavra.length < 5) {
-          alert('Complete a palavra antes de verificar!')
-          return false
+            alert('Complete a palavra antes de verificar!')
+            return false
         }
         return true
-      }
-      
-      const verificarAcerto = (palavra: string) => palavra === palavraSecreta
-      
-      const gerarResultadoVitoria = (linha: Letra[]): Letra[] =>
+    }
+
+    const verificarAcerto = (palavra: string) => palavra === palavraSecreta
+
+    const gerarResultadoVitoria = (linha: Letra[]): Letra[] =>
         linha.map(letra => ({
-          ...letra,
-          estado: EstadoLetra.Correct,
+            ...letra,
+            estado: EstadoLetra.Correct,
         }))
-      
-      const gerarResultadoNormal = (linha: Letra[], secreta: String): Letra[] => {
+
+    const gerarResultadoNormal = (linha: Letra[], secreta: String): Letra[] => {
         const letraDisponivel: Record<string, number> = {}
         for (const letra of secreta) {
-          letraDisponivel[letra] = (letraDisponivel[letra] || 0) + 1
+            letraDisponivel[letra] = (letraDisponivel[letra] || 0) + 1
         }
-      
+
         const resultadoTemp = linha.map((letra, idx) => {
-          if (letra.valor === secreta[idx]) {
-            letraDisponivel[letra.valor]--
-            return { ...letra, estado: EstadoLetra.Correct }
-          }
-          return { ...letra, estado: null }
+            if (letra.valor === secreta[idx]) {
+                letraDisponivel[letra.valor]--
+                return { ...letra, estado: EstadoLetra.Correct }
+            }
+            return { ...letra, estado: null }
         })
-      
+
         return resultadoTemp.map((letra, idx) => {
-          if (letra.estado === EstadoLetra.Correct) return letra
-      
-          if (letraDisponivel[letra.valor] > 0) {
-            letraDisponivel[letra.valor]--
-            return { ...letra, estado: EstadoLetra.Present }
-          }
-      
-          return { ...letra, estado: EstadoLetra.Absent }
+            if (letra.estado === EstadoLetra.Correct) return letra
+
+            if (letraDisponivel[letra.valor] > 0) {
+                letraDisponivel[letra.valor]--
+                return { ...letra, estado: EstadoLetra.Present }
+            }
+
+            return { ...letra, estado: EstadoLetra.Absent }
         })
-      }
-      
-      const aplicarResultadoNaLinha = (tentativas: Letra[][], resultado: Letra[]) => {
+    }
+
+    const aplicarResultadoNaLinha = (tentativas: Letra[][], resultado: Letra[]) => {
         tentativas[linhaAtual] = resultado
-      }
+    }
 
     const verificarTentativa = () => {
         const palavraJogada = tentativaAtual.map(l => l.valor).join('')
-      
+
         if (!validarEntrada(palavraJogada)) return
-      
+
         const novasTentativas = [...tentativas]
-      
+
         if (verificarAcerto(palavraJogada)) {
-          const resultado = gerarResultadoVitoria(tentativaAtual)
-          aplicarResultadoNaLinha(novasTentativas, resultado)
-          setTentativas(novasTentativas)
-          setEstadoDoJogo('vitoria')
-          return
+            const resultado = gerarResultadoVitoria(tentativaAtual)
+            aplicarResultadoNaLinha(novasTentativas, resultado)
+            setTentativas(novasTentativas)
+            setEstadoDoJogo('vitoria')
+            return
         }
-      
+
         const resultado = gerarResultadoNormal(tentativaAtual, palavraSecreta)
         aplicarResultadoNaLinha(novasTentativas, resultado)
         setTentativas(novasTentativas)
         if (linhaAtual + 1 <= tentativasMaximas) {
             setLinhaAtual(linhaAtual + 1)
             setTentativaAtual(Array(5).fill({ valor: '', estado: null }))
-          }
-      }
+        }
+    }
 
 
     useEffect(() => {
-
-        console.log('linha atual:', linhaAtual)
-
         if (estadoDoJogo !== 'jogando') return
-
+        
         if (linhaAtual >= tentativasMaximas) {
             setEstadoDoJogo('derrota')
         }
@@ -141,7 +138,7 @@ export default function Game() {
             {tentativas.map((tentativa, idx) => (
                 <Linha
                     key={idx}
-                    valor={estadoDoJogo === 'jogando' && idx === linhaAtual ? tentativaAtual : tentativa }
+                    valor={estadoDoJogo === 'jogando' && idx === linhaAtual ? tentativaAtual : tentativa}
                     ativa={idx === linhaAtual}
                     estadoJogo={estadoDoJogo}
                     onLetraChange={idx === linhaAtual ? handleLetraChange : undefined}
