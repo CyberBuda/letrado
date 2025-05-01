@@ -1,10 +1,11 @@
-import Linha from '../components/Linha'
+import Linha from '../components/Linha/Linha'
 import { useEffect, useState } from 'react'
 import './Game.css'
 import { EstadoLetra } from '../enums/EstadoLetra'
 import Letra from '../models/Letra'
 import { EstadoDoJogo } from '../models/EstadoDoJogo';
 import { listaDePalavras } from '../assets/palavras';
+import Timer from '../components/Timer/Timer'
 
 export default function Game() {
     const tentativasMaximas = 6;
@@ -20,6 +21,7 @@ export default function Game() {
     const [tentativaAtual, setTentativaAtual] = useState<Letra[]>(Array(5).fill(''))
     const [linhaAtual, setLinhaAtual] = useState(0)
     const [palavraSecreta, setPalavraSecreta] = useState<String>('')
+    const [reset, setReset] = useState<Boolean>(false)
 
     const jogarNovamente = () => {
         setTentativas(Array(tentativasMaximas).fill(null).map(() => Array(5).fill({ valor: '', estado: null })))
@@ -27,6 +29,7 @@ export default function Game() {
         setLinhaAtual(0)
         setEstadoDoJogo('jogando')
         setPalavraSecreta(sortearPalavra())
+        setReset(prev => !prev)
     }
 
     const sortearPalavra = (): string => {
@@ -130,6 +133,8 @@ export default function Game() {
     return (
         <div className="game-container">
             <img src={imagens[estadoDoJogo]} className='imagem' />
+
+           <Timer estadoDoJogo={estadoDoJogo} reset={reset}/>
 
             {estadoDoJogo === 'vitoria' && <h2>🎉 Você acertou a palavra!</h2>}
             {estadoDoJogo === 'derrota' && <h2>😢 Você perdeu! A palavra era: <br />{palavraSecreta}</h2>}

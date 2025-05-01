@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
-import Linha from '../components/Linha';
+import Linha from '../components/Linha/Linha';
 import { EstadoLetra } from '../enums/EstadoLetra';
 
 const exemplo1 = [

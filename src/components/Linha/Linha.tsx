@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './Linha.css';
-import Letra from '../models/Letra'
-import { EstadoDoJogo } from '../models/EstadoDoJogo';
+import Letra from '../../models/Letra'
+import { EstadoDoJogo } from '../../models/EstadoDoJogo';
 
 interface LinhaProps {
   valor: Letra[];
