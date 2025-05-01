@@ -73,7 +73,7 @@ export default function Game() {
             return { ...letra, estado: null }
         })
 
-        return resultadoTemp.map((letra, idx) => {
+        return resultadoTemp.map((letra) => {
             if (letra.estado === EstadoLetra.Correct) return letra
 
             if (letraDisponivel[letra.valor] > 0) {
@@ -116,7 +116,7 @@ export default function Game() {
 
     useEffect(() => {
         if (estadoDoJogo !== 'jogando') return
-        
+
         if (linhaAtual >= tentativasMaximas) {
             setEstadoDoJogo('derrota')
         }

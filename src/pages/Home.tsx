@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import Linha from '../components/Linha';
 import { EstadoLetra } from '../enums/EstadoLetra';
-import Letra from '../models/Letra';
 
 const exemplo1 = [
   { valor: 'F', estado: EstadoLetra.Absent },
