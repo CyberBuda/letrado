@@ -6,9 +6,12 @@ import Letra from '../models/Letra'
 import { EstadoDoJogo } from '../models/EstadoDoJogo';
 import { listaDePalavras } from '../assets/palavras';
 import Timer from '../components/Timer/Timer'
+import { useNavigate } from 'react-router-dom'
 
 export default function Game() {
     const tentativasMaximas = 6;
+
+    const navigate = useNavigate();
 
     const imagens = {
         jogando: '/imagens/nerdcat.jpg',
@@ -133,6 +136,9 @@ export default function Game() {
     }, [])
 
     return (
+        <>
+        <button className='botao-home' type='button' onClick={() => navigate('/')}>Home</button>
+
         <div className="game-container">
             <img src={imagens[estadoDoJogo]} className='imagem' />
 
@@ -165,8 +171,7 @@ export default function Game() {
                 </button>
             }
 
-
-
         </div>
+        </>
     );
 }

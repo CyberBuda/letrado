@@ -47,6 +47,17 @@ button {
   transition: background-color 0.3s;
 }
 
+.botao-home {
+  position: absolute;  /* Faz o botão flutuar */
+  top: 10px;           /* Distância do topo da tela */
+  left: 10px;          /* Distância da lateral esquerda */
+  z-index: 100;        /* Garante que o botão ficará acima de outros elementos */
+}
+
+.botao-home:hover {
+  background-color: #25a32f; /* Cor de fundo ao passar o mouse */
+}
+
 .botao-verificar {
   background-color: #008000;
 }
