@@ -30,7 +30,6 @@ const exemplo3 = [
 
 export default function Home() {
   const navigate = useNavigate();
-  const palavraExemplo: Letra[] = [{ valor: 'T', estado: EstadoLetra.Present }]
 
   return (
     <div className="home-container">

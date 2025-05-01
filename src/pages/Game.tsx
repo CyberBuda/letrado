@@ -1,7 +1,7 @@
-import Linha from '../components/Linha';
-import { useEffect, useState } from 'react';
+import Linha from '../components/Linha'
+import { useEffect, useState } from 'react'
 import './Game.css'
-import { EstadoLetra } from '../enums/EstadoLetra';
+import { EstadoLetra } from '../enums/EstadoLetra'
 import Letra from '../models/Letra'
 import { EstadoDoJogo } from '../models/EstadoDoJogo';
 import { listaDePalavras } from '../assets/palavras';
@@ -9,98 +9,126 @@ import { listaDePalavras } from '../assets/palavras';
 export default function Game() {
     const tentativasMaximas = 6;
 
-    const [estadoDoJogo, setEstadoDoJogo] = useState<EstadoDoJogo>('jogando');
-    const [tentativas, setTentativas] = useState<Letra[][]>(Array(tentativasMaximas).fill(null).map(() => Array(5).fill(''))); //Cria um array vazio de 6 elementos e preenche todos com ''. Cada elemento será uma linha
-    const [tentativaAtual, setTentativaAtual] = useState<Letra[]>(Array(5).fill(''));
-    const [linhaAtual, setLinhaAtual] = useState(0);
-    const [palavraSecreta, setPalavraSecreta] = useState<String>('')
-
-    const sortearPalavra = (): string => {
-        const indice = Math.floor(Math.random() * listaDePalavras.length);
-        console.log(listaDePalavras[indice])
-        return listaDePalavras[indice];
-    };
-
-    const handleLetraChange = (index: number, letra: string) => {
-        setTentativaAtual((prev) => {
-            const novaTentativa = [...prev];
-            novaTentativa[index] = { valor: letra, estado: null };
-            return novaTentativa;
-        });
-    };
-
-    const verificarTentativa = () => {
-        const palavraJogada = tentativaAtual.map(l => l.valor).join('');
-
-        if (palavraJogada.length < 5) {
-            alert('Complete a palavra antes de verificar!');
-            return;
-        }
-
-        const letraDisponivel: { [letra: string]: number } = {};
-
-        for (const letra of palavraSecreta) {
-            letraDisponivel[letra] = (letraDisponivel[letra] || 0) + 1;
-        }
-
-        const resultadoTemp = tentativaAtual.map((letra, idx) => {
-            if (letra.valor === palavraSecreta[idx]) {
-                letraDisponivel[letra.valor]--;
-                return { ...letra, estado: EstadoLetra.Correct };
-            }
-            return { ...letra, estado: null };
-        });
-
-        const resultadoFinal = resultadoTemp.map((letra) => {
-            if (letra.estado === EstadoLetra.Correct) {
-                return letra;
-            }
-            if (letraDisponivel[letra.valor] > 0) {
-                letraDisponivel[letra.valor]--;
-                return { ...letra, estado: EstadoLetra.Present };
-            }
-            return { ...letra, estado: EstadoLetra.Absent };
-        });
-
-        const novasTentativas = [...tentativas];
-        novasTentativas[linhaAtual] = resultadoFinal;
-
-        if (palavraJogada === palavraSecreta) {
-            tentativaAtual.map(letra => ({
-              ...letra,
-              estado: EstadoLetra.Correct,
-            }))
-            setEstadoDoJogo('vitoria')
-        }
-
-        if (linhaAtual + 1 >= tentativasMaximas) {
-            setEstadoDoJogo('derrota');
-            return;
-        }
-
-        setTentativas(novasTentativas);
-        setTentativaAtual(Array(5).fill({ valor: '', estado: null }));
-        setLinhaAtual(linhaAtual + 1);
-
-    }
-
-    useEffect(() => {
-        setPalavraSecreta(sortearPalavra());
-    }, []);
-
-    const jogarNovamente = () => {
-        setTentativas(Array(tentativasMaximas).fill(null).map(() => Array(5).fill({ valor: '', estado: null })));
-        setTentativaAtual(Array(5).fill({ valor: '', estado: null }));
-        setLinhaAtual(0);
-        setEstadoDoJogo('jogando');
-        setPalavraSecreta(sortearPalavra());
-    }
-
     const imagens = {
         jogando: '/imagens/nerdcat.jpg',
         vitoria: '/imagens/eba.jpg',
         derrota: '/imagens/gato-missil.gif',
     }
+
+    const [estadoDoJogo, setEstadoDoJogo] = useState<EstadoDoJogo>('jogando')
+    const [tentativas, setTentativas] = useState<Letra[][]>(Array(tentativasMaximas).fill(null).map(() => Array(5).fill(''))) //Cria um array vazio de 6 elementos e preenche todos com ''. Cada elemento será uma linha
+    const [tentativaAtual, setTentativaAtual] = useState<Letra[]>(Array(5).fill(''))
+    const [linhaAtual, setLinhaAtual] = useState(0)
+    const [palavraSecreta, setPalavraSecreta] = useState<String>('')
+
+    const jogarNovamente = () => {
+        setTentativas(Array(tentativasMaximas).fill(null).map(() => Array(5).fill({ valor: '', estado: null })))
+        setTentativaAtual(Array(5).fill({ valor: '', estado: null }))
+        setLinhaAtual(0)
+        setEstadoDoJogo('jogando')
+        setPalavraSecreta(sortearPalavra())
+    }
+
+    const sortearPalavra = (): string => {
+        const indice = Math.floor(Math.random() * listaDePalavras.length)
+        console.log(listaDePalavras[indice])
+        return listaDePalavras[indice]
+    }
+
+    const handleLetraChange = (index: number, letra: string) => {
+        setTentativaAtual((prev) => {
+            const novaTentativa = [...prev]
+            novaTentativa[index] = { valor: letra, estado: null }
+            return novaTentativa
+        })
+    }
+
+    const validarEntrada = (palavra: string) => {
+        if (palavra.length < 5) {
+          alert('Complete a palavra antes de verificar!')
+          return false
+        }
+        return true
+      }
+      
+      const verificarAcerto = (palavra: string) => palavra === palavraSecreta
+      
+      const gerarResultadoVitoria = (linha: Letra[]): Letra[] =>
+        linha.map(letra => ({
+          ...letra,
+          estado: EstadoLetra.Correct,
+        }))
+      
+      const gerarResultadoNormal = (linha: Letra[], secreta: String): Letra[] => {
+        const letraDisponivel: Record<string, number> = {}
+        for (const letra of secreta) {
+          letraDisponivel[letra] = (letraDisponivel[letra] || 0) + 1
+        }
+      
+        const resultadoTemp = linha.map((letra, idx) => {
+          if (letra.valor === secreta[idx]) {
+            letraDisponivel[letra.valor]--
+            return { ...letra, estado: EstadoLetra.Correct }
+          }
+          return { ...letra, estado: null }
+        })
+      
+        return resultadoTemp.map((letra, idx) => {
+          if (letra.estado === EstadoLetra.Correct) return letra
+      
+          if (letraDisponivel[letra.valor] > 0) {
+            letraDisponivel[letra.valor]--
+            return { ...letra, estado: EstadoLetra.Present }
+          }
+      
+          return { ...letra, estado: EstadoLetra.Absent }
+        })
+      }
+      
+      const aplicarResultadoNaLinha = (tentativas: Letra[][], resultado: Letra[]) => {
+        tentativas[linhaAtual] = resultado
+      }
+
+    const verificarTentativa = () => {
+        const palavraJogada = tentativaAtual.map(l => l.valor).join('')
+      
+        if (!validarEntrada(palavraJogada)) return
+      
+        const novasTentativas = [...tentativas]
+      
+        if (verificarAcerto(palavraJogada)) {
+          const resultado = gerarResultadoVitoria(tentativaAtual)
+          aplicarResultadoNaLinha(novasTentativas, resultado)
+          setTentativas(novasTentativas)
+          setEstadoDoJogo('vitoria')
+          return
+        }
+      
+        const resultado = gerarResultadoNormal(tentativaAtual, palavraSecreta)
+        aplicarResultadoNaLinha(novasTentativas, resultado)
+        setTentativas(novasTentativas)
+        if (linhaAtual + 1 <= tentativasMaximas) {
+            setLinhaAtual(linhaAtual + 1)
+            setTentativaAtual(Array(5).fill({ valor: '', estado: null }))
+          }
+      }
+
+
+    useEffect(() => {
+
+        console.log('linha atual:', linhaAtual)
+
+        if (estadoDoJogo !== 'jogando') return
+
+        if (linhaAtual >= tentativasMaximas) {
+            setEstadoDoJogo('derrota')
+        }
+    }, [linhaAtual])
+
+
+    useEffect(() => {
+        setPalavraSecreta(sortearPalavra())
+    }, [])
 
     return (
         <div className="game-container">
@@ -113,7 +141,7 @@ export default function Game() {
             {tentativas.map((tentativa, idx) => (
                 <Linha
                     key={idx}
-                    valor={idx === linhaAtual ? tentativaAtual : tentativa}
+                    valor={estadoDoJogo === 'jogando' && idx === linhaAtual ? tentativaAtual : tentativa }
                     ativa={idx === linhaAtual}
                     estadoJogo={estadoDoJogo}
                     onLetraChange={idx === linhaAtual ? handleLetraChange : undefined}

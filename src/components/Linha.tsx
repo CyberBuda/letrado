@@ -28,9 +28,9 @@ function Linha({ valor, ativa, estadoJogo, onLetraChange, onEnter }: LinhaProps)
   
     // Mover o foco depois da atualização de estado
     if (letra && index < inputsRef.current.length - 1) {
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         inputsRef.current[index + 1]?.focus();
-      }, 0); // joga o foco para o próximo evento da fila
+      }); // joga o foco para o próximo evento da fila
     }
   };
 
