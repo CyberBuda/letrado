@@ -19,6 +19,7 @@
   .letra-input:focus {
     border-color: #4caf50;
     box-shadow: 0 0 5px #4caf50;
+    animation: pulse 0.6s ease-in-out;
   }
 
   .letra-input::selection {
@@ -38,11 +39,6 @@
     }
   }
   
-  /* Aplica a animação de pulso */
-  .letra-input.pulsar {
-    animation: pulse 0.2s ease-in-out;
-  }
-
   .correct {
     background-color: #4caf50; /* Verde */
     color: white;
