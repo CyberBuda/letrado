@@ -132,7 +132,7 @@ export default function Game() {
             <img src={imagens[estadoDoJogo]} className='imagem' />
 
             {estadoDoJogo === 'vitoria' && <h2>🎉 Você acertou a palavra!</h2>}
-            {estadoDoJogo === 'derrota' && <h2>😢 Você perdeu! A palavra era: {palavraSecreta}</h2>}
+            {estadoDoJogo === 'derrota' && <h2>😢 Você perdeu! A palavra era: <br />{palavraSecreta}</h2>}
             {estadoDoJogo === 'jogando' && <h2>🧠 Boa sorte!</h2>}
 
             {tentativas.map((tentativa, idx) => (

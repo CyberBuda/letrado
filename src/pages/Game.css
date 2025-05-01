@@ -1,71 +1,64 @@
 .titulo {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    gap: 8px;
-    text-align: center;
-    max-width: 400px; 
-    width: 90%; 
-    margin: 0 auto;
-    margin-bottom: 0;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  gap: 2px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 0;
+}
 
 .imagem {
-    align-items: center;
+  align-items: center;
+}
+
+.imagem {
+  width: 250px;
+  max-width: 80%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  color: white;
+  background-color: #45a049;
+  padding: 5px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-top: 5px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
 }
 
 .botao-verificar {
-    background-color: green;
-    color: white;
-    margin-top: 5px;
+  background-color: green;
+  color: white;
+}
+
+.botao-verificar:hover {
+  background-color: #45a049;
 }
 
 .botao-verificar:disabled {
-    background-color: gray;
+  background-color: gray;
 }
 
-.imagem {
-    width: 250px; 
-    max-width: 80%;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+.botao-jogar-novamente {
+  background-color:#1976d2;
+  color: white;
+}
 
-  button {
-    color: white;
-    background-color: #45a049;
-    padding: 5px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    margin-top: 20px;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
-  }
+.botao-jogar-novamente:hover {
+  background-color:#2196f3;
   
-  button:hover {
-    background-color: #45a049;
-  }
-
-  .botao-jogar-novamente {
-    background-color: #2196f3;
-    color: white;
-    padding: 5px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    margin-top: 20px;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
-  }
-  
-  .botao-jogar-novamente:hover {
-    background-color: #1976d2;
-  }
+}
