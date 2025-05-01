@@ -41,8 +41,7 @@ button {
 }
 
 .botao-verificar {
-  background-color: green;
-  color: white;
+  background-color: #008000;
 }
 
 .botao-verificar:hover {
@@ -55,7 +54,6 @@ button {
 
 .botao-jogar-novamente {
   background-color:#1976d2;
-  color: white;
 }
 
 .botao-jogar-novamente:hover {
