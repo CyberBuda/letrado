@@ -127,7 +127,9 @@ export default function Game() {
 
 
     useEffect(() => {
-        setPalavraSecreta(sortearPalavra())
+        if (palavraSecreta !== undefined) {
+            setPalavraSecreta(sortearPalavra())
+        }
     }, [])
 
     return (

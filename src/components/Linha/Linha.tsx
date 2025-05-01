@@ -16,31 +16,32 @@ function Linha({ valor, ativa, estadoJogo, onLetraChange, onEnter }: LinhaProps)
 
   //handle change para cada input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const letra = e.target.value.toUpperCase().slice(-1); // pega sempre só a última letra
-  
+    const letra = e.target.value.toUpperCase().slice(-1);
+
     if (!/^[A-Z]$/.test(letra)) {
-      return; // ignora caracteres inválidos
+      return;
     }
 
     if (onLetraChange) {
       onLetraChange(index, letra);
     }
-  
-    // Mover o foco depois da atualização de estado
+
     if (letra && index < inputsRef.current.length - 1) {
       requestAnimationFrame(() => {
         inputsRef.current[index + 1]?.focus();
-      }); // joga o foco para o próximo evento da fila
+      })
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.key === 'Backspace' || e.key === 'Delete') {
-      e.preventDefault(); 
-  
+      e.preventDefault();
+
       if (onLetraChange) {
         onLetraChange(index, '');
+        inputsRef.current[index - 1]?.focus();
       }
+
     } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
       if (index > 0) {
@@ -80,7 +81,7 @@ function Linha({ valor, ativa, estadoJogo, onLetraChange, onEnter }: LinhaProps)
           className={`letra-input ${valor[i].estado ?? ''}`}
           value={valor[i].valor || ''}
           disabled={!ativa || !(estadoJogo == 'jogando')}
-          ref={(el) => {inputsRef.current[i] = el}}
+          ref={(el) => { inputsRef.current[i] = el }}
           onChange={(e) => handleChange(e, i)}
           onKeyDown={(e) => handleKeyDown(e, i)}
           onFocus={handleFocus}
