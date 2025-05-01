@@ -76,7 +76,7 @@ function Linha({ valor, ativa, estadoJogo, onLetraChange, onEnter }: LinhaProps)
       {[0, 1, 2, 3, 4].map((i) => (
         <input
           key={i}
-          inputMode="none"
+          inputMode="text"
           autoComplete="off"
           type="text"
           maxLength={1}
