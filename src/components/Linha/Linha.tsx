@@ -68,7 +68,7 @@ function Linha({ valor, ativa, estadoJogo, onLetraChange, onEnter }: LinhaProps)
   }, [ativa]);
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.target.select(); // Seleciona automaticamente o conteúdo inteiro do input
+    e.target.select();
   };
 
   return (

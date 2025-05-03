@@ -137,7 +137,6 @@ export default function Game() {
 
     return (
         <>
-        <button className='botao-home' type='button' onClick={() => navigate('/')}>Home</button>
 
         <div className="game-container">
             <img src={imagens[estadoDoJogo]} className='imagem' />
