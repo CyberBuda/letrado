@@ -2,34 +2,45 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
-export const NavbarLateral: React.FC = () => {
-  const [aberto, setAberto] = useState(false);
-  const navigate = useNavigate();
+interface Props {
+    temaEscuro: boolean;
+    alternarTema: () => void;
+}
 
-  const alternarMenu = () => setAberto(prev => !prev);
-  const fecharMenu = () => setAberto(false);
+export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema }) => {
+    const [aberto, setAberto] = useState(false);
+    const navigate = useNavigate();
 
-  const irPara = (caminho: string) => {
-    navigate(caminho);
-    fecharMenu();
-  };
+    const alternarMenu = () => setAberto(prev => !prev);
+    const fecharMenu = () => setAberto(false);
 
-  return (
-    <>
-      <button className="menu-botao" onClick={alternarMenu}>
-        ☰
-      </button>
+    const irPara = (caminho: string) => {
+        navigate(caminho);
+        fecharMenu();
+    };
 
-      <div className={`menu-lateral ${aberto ? 'aberto' : ''}`}>
-        <button className="fechar-botao" onClick={fecharMenu}>×</button>
-        <ul>
-          <li onClick={() => irPara('/')}>🏠 Início</li>
-          <li onClick={() => irPara('/game')}>🎮 Novo Jogo</li>
-          {/* Futuro: <li onClick={() => irPara('/stats')}>📊 Estatísticas</li> */}
-        </ul>
-      </div>
+    return (
+        <>
+            <button className="menu-botao" onClick={alternarMenu}>
+                ☰
+            </button>
 
-      {aberto && <div className="overlay" onClick={fecharMenu} />}
-    </>
-  );
+            <div className={`menu-lateral ${aberto ? 'aberto' : ''}`}>
+                <button className="fechar-botao" onClick={fecharMenu}>×</button>
+                <ul>
+                    <li onClick={() => irPara('/')}>🏠 Início</li>
+                    <li onClick={() => irPara('/game')}>🎮 Novo Jogo</li>
+                    <li className="switch-container">
+                        <span>{temaEscuro ? '🌙' : '☀️'}</span>
+                        <label className="switch">
+                            <input type="checkbox" checked={temaEscuro} onChange={alternarTema} />
+                            <span className="slider" />
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+            {aberto && <div className="overlay" onClick={fecharMenu} />}
+        </>
+    );
 };
