@@ -6,12 +6,9 @@ import Letra from '../models/Letra'
 import { EstadoDoJogo } from '../models/EstadoDoJogo';
 import { listaDePalavras } from '../assets/palavras';
 import Timer from '../components/Timer/Timer'
-import { useNavigate } from 'react-router-dom'
 
 export default function Game() {
     const tentativasMaximas = 6;
-
-    const navigate = useNavigate();
 
     const imagens = {
         jogando: '/imagens/nerdcat.jpg',
