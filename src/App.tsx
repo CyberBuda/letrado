@@ -9,6 +9,8 @@ import { useState, useEffect } from 'react';
 export default function App() {
 
   const { temaEscuro, alternarTema } = useTema();
+
+  //touchStartX e touchDeltaX sao states para controlar toque na tela e tornar a abertura e fechamento do menu mais fluida. 
   const [menuAberto, setMenuAberto] = useState(false);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchDeltaX, setTouchDeltaX] = useState(0);
