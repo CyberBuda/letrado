@@ -13,9 +13,9 @@
   .menu-lateral {
     position: fixed;
     top: 0;
-    left: -250px;
+    left: -300px;
     height: 100%;
-    width: 200px;
+    width: 300px;
     background-color: var(--card);
     box-shadow: 2px 0 5px rgba(0,0,0,0.3);
     transition: left 0.3s ease;
@@ -29,16 +29,17 @@
   
   .menu-lateral ul {
     list-style: none;
-    padding: 0;
-    margin-top: 5px;
+    padding: 1rem;
+    gap: 1rem;
+    margin-top: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
   
   .menu-lateral li {
-    padding: 10px 0;
-    font-size: 18px;
+    padding: .5rem;
+    font-size: 1.5rem;
     cursor: pointer;
     width: 100%;
     text-align: left;
@@ -46,6 +47,17 @@
   
   .menu-lateral li:hover {
     background-color: var(--hover);
+  }
+
+  .botao-fechar {
+    position: absolute;
+    top: .1rem;
+    right: 10px;
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: red
   }
   
   .overlay {

@@ -27,6 +27,7 @@ export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema, abert
             </button>
 
             <div className={`menu-lateral ${aberto ? 'aberto' : ''}`}>
+            <button className="botao-fechar" onClick={fecharMenu}>×</button>
                 <ul>
                     <li onClick={() => irPara('/')}>🏠 Início</li>
                     <li onClick={() => irPara('/game')}>🎮 Novo Jogo</li>
