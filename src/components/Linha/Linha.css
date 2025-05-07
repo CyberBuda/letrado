@@ -65,3 +65,24 @@
   .correct, .present, .absent {
     transition: background-color 0.5s ease, color 0.5s ease;
   }
+
+  /* animação para erro */
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+  
+  .input-erro {
+    border: 2px solid red;
+    animation: shake 0.3s;
+  }
+  
+  .mensagem-erro {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    transition: opacity 0.3s ease;
+  }

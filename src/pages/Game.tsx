@@ -22,6 +22,7 @@ export default function Game() {
     const [linhaAtual, setLinhaAtual] = useState(0)
     const [palavraSecreta, setPalavraSecreta] = useState<String>('')
     const [reset, setReset] = useState<Boolean>(false)
+    const [erro, setErro] = useState('');
 
     const jogarNovamente = () => {
         setTentativas(Array(tentativasMaximas).fill(null).map(() => Array(5).fill({ valor: '', estado: null })))
@@ -48,11 +49,16 @@ export default function Game() {
 
     const validarEntrada = (palavra: string) => {
         if (palavra.length < 5) {
-            alert('Complete a palavra antes de verificar!')
+            exibirErro('A palavra deve ter 5 letras!');
             return false
         }
         return true
     }
+
+    const exibirErro = (mensagem: string) => {
+        setErro(mensagem);
+        setTimeout(() => setErro(''), 2000); // apaga após 2s
+    };
 
     const verificarAcerto = (palavra: string) => palavra === palavraSecreta
 
@@ -135,39 +141,45 @@ export default function Game() {
     return (
         <>
 
-        <div className="game-container">
-            <img src={imagens[estadoDoJogo]} className='imagem' />
+            <div className="game-container">
+                <img src={imagens[estadoDoJogo]} className='imagem' />
 
-           <Timer estadoDoJogo={estadoDoJogo} reset={reset}/>
+                <Timer estadoDoJogo={estadoDoJogo} reset={reset} />
 
-            {estadoDoJogo === 'vitoria' && <h2>🎉 Você acertou a palavra!</h2>}
-            {estadoDoJogo === 'derrota' && <h2>😢 Você perdeu! A palavra era: <br />{palavraSecreta}</h2>}
-            {estadoDoJogo === 'jogando' && <h2>🧠 Boa sorte!</h2>}
+                {estadoDoJogo === 'vitoria' && <h2>🎉 Você acertou a palavra!</h2>}
+                {estadoDoJogo === 'derrota' && <h2>😢 Você perdeu! A palavra era: <br />{palavraSecreta}</h2>}
+                {estadoDoJogo === 'jogando' && <h2>🧠 Boa sorte!</h2>}
 
-            {tentativas.map((tentativa, idx) => (
-                <Linha
-                    key={idx}
-                    valor={estadoDoJogo === 'jogando' && idx === linhaAtual ? tentativaAtual : tentativa}
-                    ativa={idx === linhaAtual}
-                    estadoJogo={estadoDoJogo}
-                    onLetraChange={idx === linhaAtual ? handleLetraChange : undefined}
-                    onEnter={verificarTentativa}
-                />
-            ))}
+                {erro && <div className="mensagem-erro">
+                    <div className="shake">
+                        {erro}
+                    </div>
+                </div>}
 
-            {estadoDoJogo === 'jogando' &&
-                <button onClick={verificarTentativa} className='botao-verificar'>
-                    Verificar
-                </button>
-            }
+                {tentativas.map((tentativa, idx) => (
+                    <Linha
+                        key={idx}
+                        valor={estadoDoJogo === 'jogando' && idx === linhaAtual ? tentativaAtual : tentativa}
+                        ativa={idx === linhaAtual}
+                        estadoJogo={estadoDoJogo}
+                        onLetraChange={idx === linhaAtual ? handleLetraChange : undefined}
+                        onEnter={verificarTentativa}
+                    />
+                ))}
 
-            {estadoDoJogo !== 'jogando' &&
-                <button onClick={jogarNovamente} className='botao-jogar-novamente'>
-                    Jogar Novamente
-                </button>
-            }
+                {estadoDoJogo === 'jogando' &&
+                    <button onClick={verificarTentativa} className='botao-verificar'>
+                        Verificar
+                    </button>
+                }
 
-        </div>
+                {estadoDoJogo !== 'jogando' &&
+                    <button onClick={jogarNovamente} className='botao-jogar-novamente'>
+                        Jogar Novamente
+                    </button>
+                }
+
+            </div>
         </>
     );
 }
