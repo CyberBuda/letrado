@@ -38,6 +38,7 @@
   }
   
   .menu-lateral li {
+    text-align: center;
     padding: .5rem;
     font-size: 1.2rem;
     cursor: pointer;

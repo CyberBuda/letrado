@@ -51,6 +51,7 @@ body {
 
 body[data-theme='dark'] {
   --bg: #242424;
+  --bg-input: #242424;
   --text: rgba(255, 255, 255, 0.87);
   --card: #2a2a2a;
   --hover: #333333;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { House, Plus, SunMoon  } from 'lucide-react';
 import './Navbar.css';
 
 interface Props {
@@ -29,14 +30,15 @@ export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema, abert
             <div className={`menu-lateral ${aberto ? 'aberto' : ''}`}>
             <button className="botao-fechar" onClick={fecharMenu}>×</button>
                 <ul>
-                    <li onClick={() => irPara('/')}>🏠 Início</li>
-                    <li onClick={() => irPara('/game')}>🎮 Novo Jogo</li>
+                    <li onClick={() => irPara('/')}><House/><span>Início</span></li>
+                    <li onClick={() => irPara('/game')}><Plus/><span>Novo Jogo</span></li>
                     <li className="switch-container">
-                        <span>{temaEscuro ? '🌙' : '☀️'}</span>
+                        <SunMoon/><span>Tema: </span><span>{'☀️'}</span>
                         <label className="switch">
                             <input type="checkbox" checked={temaEscuro} onChange={alternarTema} />
                             <span className="slider" />
                         </label>
+                        <span>{'🌙'}</span>
                     </li>
                 </ul>
             </div>
