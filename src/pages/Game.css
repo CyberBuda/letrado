@@ -73,11 +73,13 @@ button {
   text-align: center;
   font-weight: bold;
   max-width: 80%;
-  position: absolute;
+  position: fixed;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 999;
+  z-index: 9999;
+  pointer-events: none;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .shake {
