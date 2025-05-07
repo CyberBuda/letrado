@@ -4,7 +4,8 @@ import './Game.css'
 import { EstadoLetra } from '../enums/EstadoLetra'
 import Letra from '../models/Letra'
 import { EstadoDoJogo } from '../models/EstadoDoJogo';
-import { listaDePalavras } from '../assets/palavras';
+import { listaDePalavrasSorteaveis } from '../assets/palavras-sorteaveis';
+import { listaDePalavrasVerificaveis } from '../assets/palavras-verificaveis';
 import Timer from '../components/Timer/Timer'
 
 export default function Game() {
@@ -34,9 +35,9 @@ export default function Game() {
     }
 
     const sortearPalavra = (): string => {
-        const indice = Math.floor(Math.random() * listaDePalavras.length)
-        console.log(listaDePalavras[indice])
-        return listaDePalavras[indice]
+        const indice = Math.floor(Math.random() * listaDePalavrasSorteaveis.length)
+        console.log(listaDePalavrasSorteaveis[indice])
+        return listaDePalavrasSorteaveis[indice]
     }
 
     const handleLetraChange = (index: number, letra: string) => {
@@ -50,9 +51,15 @@ export default function Game() {
     const validarEntrada = (palavra: string) => {
         if (palavra.length < 5) {
             exibirErro('A palavra deve ter 5 letras!');
-            return false
+            return false;
         }
-        return true
+
+        if (!listaDePalavrasVerificaveis.includes(palavra.toUpperCase())) {
+            exibirErro('Palavra não reconhecida!');
+            return false;
+        }
+
+        return true;
     }
 
     const exibirErro = (mensagem: string) => {

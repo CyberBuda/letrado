@@ -1,4 +1,4 @@
-export const listaDePalavras = [
+export const listaDePalavrasSorteaveis = [
   "ABRIL",
   "ACASO",
   "ACENO",
@@ -258,7 +258,6 @@ export const listaDePalavras = [
   "SAMBA",
   "SANTO",
   "SANTO",
-  "SAUDE",
   "SERIE",
   "SERVO",
   "SINAL",
