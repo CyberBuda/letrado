@@ -47,13 +47,29 @@ export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema, abert
                         <span>{'🌙'}</span>
                     </li>
                 </ul>
-                <hr />
                 <ul className='estatisticas'>
-                    <li><strong><ChartBarIncreasing/>Estatísticas:</strong></li>
-                    <li><SquareCheck color='green'/><strong>Vitórias:</strong> {vitoriasTotais}</li>
-                    <li><SquareX color='red' /><strong>Derrotas:</strong> {estatisticas.derrotas}</li>
+                    <li><strong><ChartBarIncreasing />Estatísticas:</strong></li>
                     <li><AlarmClock color='blue' /><strong>Tempo médio: </strong> {mediaTempo} segundos</li>
+                    <li><SquareX color='red' /><strong>Derrotas:</strong> {estatisticas.derrotas}</li>
                 </ul>
+                <div className="grafico-vitorias">
+                    <p className="titulo-grafico"><SquareCheck color="green" />Vitórias:</p>
+                    {estatisticas.vitoriasPorTentativa.map((qtd, idx) => {
+                        const maior = Math.max(...estatisticas.vitoriasPorTentativa, 1); // evitar divisão por zero
+                        const largura = (qtd / maior) * 100;
+
+                        return (
+                            <div key={idx} className="linha-vitoria">
+                                <span className="tentativa-label">{idx + 1}</span>
+                                <div className="barra-container">
+                                    <div className="barra" style={{ width: `${largura}%` }}>
+                                        {qtd > 0 && <span className="qtd">{qtd}</span>}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
 
             {aberto && <div className="overlay" onClick={fecharMenu} />}

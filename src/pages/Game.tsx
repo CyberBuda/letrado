@@ -6,8 +6,9 @@ import Letra from '../models/Letra'
 import { EstadoDoJogo } from '../models/EstadoDoJogo';
 import { listaDePalavrasSorteaveis } from '../assets/palavras-sorteaveis';
 import { listaDePalavrasVerificaveis } from '../assets/palavras-verificaveis';
-import { ChartBarIncreasing, RotateCcw } from 'lucide-react';
+import { ChartBarIncreasing } from 'lucide-react';
 import Timer from '../components/Timer/Timer'
+import { EstatisticasJogo, useEstatisticas } from '../context/EstatisticasContext'
 
 export default function Game() {
     const tentativasMaximas = 6;
@@ -18,6 +19,8 @@ export default function Game() {
         derrota: '/imagens/gato-missil.gif',
     }
 
+    const estatisticas = useEstatisticas();
+
     const [estadoDoJogo, setEstadoDoJogo] = useState<EstadoDoJogo>('jogando')
     const [tentativas, setTentativas] = useState<Letra[][]>(Array(tentativasMaximas).fill(null).map(() => Array(5).fill('')))
     const [tentativaAtual, setTentativaAtual] = useState<Letra[]>(Array(5).fill(''))
@@ -25,6 +28,7 @@ export default function Game() {
     const [palavraSecreta, setPalavraSecreta] = useState<String>('')
     const [reset, setReset] = useState<Boolean>(false)
     const [erro, setErro] = useState('')
+    const [tempoFinal, setTempoFinal] = useState(0)
 
     const jogarNovamente = () => {
         setTentativas(Array(tentativasMaximas).fill(null).map(() => Array(5).fill({ valor: '', estado: null })))
@@ -32,6 +36,7 @@ export default function Game() {
         setLinhaAtual(0)
         setEstadoDoJogo('jogando')
         setPalavraSecreta(sortearPalavra())
+        setTempoFinal(0)
         setReset(prev => !prev)
     }
 
@@ -117,6 +122,10 @@ export default function Game() {
             const resultado = gerarResultadoVitoria(tentativaAtual)
             aplicarResultadoNaLinha(novasTentativas, resultado)
             setTentativas(novasTentativas)
+            setTempoFinal((prevTempo) => {
+            atualizarEstatisticas(true, linhaAtual + 1, prevTempo);
+            return prevTempo;
+            });
             setEstadoDoJogo('vitoria')
             return
         }
@@ -130,12 +139,33 @@ export default function Game() {
         }
     }
 
+    const atualizarEstatisticas = (vitoria: boolean, tentativasUsadas: number, tempoEmSegundos: number) => {
+        const dados = localStorage.getItem("estatisticasLetrado");
+        if (!dados) return;
+
+        const estatisticas: EstatisticasJogo = JSON.parse(dados);
+
+        estatisticas.totalJogos += 1;
+        estatisticas.totalTempo += tempoEmSegundos;
+
+        if (vitoria && tentativasUsadas >= 1 && tentativasUsadas <= 6) {
+            estatisticas.vitoriasPorTentativa[tentativasUsadas - 1] += 1;
+        } else if (!vitoria) {
+            estatisticas.derrotas += 1;
+        }
+
+        localStorage.setItem("estatisticasLetrado", JSON.stringify(estatisticas));
+    };
 
     useEffect(() => {
-        if (estadoDoJogo !== 'jogando') return
+        if (estadoDoJogo !== 'jogando') return;
 
         if (linhaAtual >= tentativasMaximas) {
-            setEstadoDoJogo('derrota')
+            setTempoFinal((prevTempo) => {
+            atualizarEstatisticas(false, linhaAtual + 1, prevTempo);
+            return prevTempo;
+            });
+            setEstadoDoJogo('derrota');
         }
     }, [linhaAtual])
 
@@ -152,7 +182,7 @@ export default function Game() {
             <div className="game-container">
                 <img src={imagens[estadoDoJogo]} className='imagem' />
 
-                <Timer estadoDoJogo={estadoDoJogo} reset={reset} />
+                <Timer estadoDoJogo={estadoDoJogo} reset={reset} onFinalizar={(tempo) => setTempoFinal(tempo)} />
 
                 {estadoDoJogo === 'vitoria' && <h2>🎉 Você acertou a palavra!</h2>}
                 {estadoDoJogo === 'derrota' && <h2>😢 Você perdeu! A palavra era: <br />{palavraSecreta}</h2>}
@@ -182,14 +212,14 @@ export default function Game() {
                 }
 
                 {estadoDoJogo !== 'jogando' &&
-                <div className="footer-game">
-                    <button onClick={jogarNovamente} className='botao-jogar-novamente'>
-                        Jogar Novamente
-                    </button>
-                    <button onClick={() => ''} className='botao-estatisticas'>
-                       <ChartBarIncreasing size='16px'/>Ver Estatísticas
-                    </button>
-                </div>
+                    <div className="footer-game">
+                        <button onClick={jogarNovamente} className='botao-jogar-novamente'>
+                            Jogar Novamente
+                        </button>
+                        <button onClick={() => ''} className='botao-estatisticas'>
+                            <ChartBarIncreasing size='16px' />Ver Estatísticas
+                        </button>
+                    </div>
                 }
 
             </div>

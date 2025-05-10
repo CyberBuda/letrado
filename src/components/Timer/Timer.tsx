@@ -5,9 +5,10 @@ import './Timer.css'
 interface TimerProps {
     estadoDoJogo: EstadoDoJogo
     reset: Boolean
+    onFinalizar?: (tempo: number) => void
 }
 
-function Timer({ estadoDoJogo, reset }: TimerProps) {
+function Timer({ estadoDoJogo, reset, onFinalizar }: TimerProps) {
 
     const [tempo, setTempo] = useState(0);
     const timerRef = useRef<number | null>(null);
@@ -27,6 +28,10 @@ function Timer({ estadoDoJogo, reset }: TimerProps) {
             if (timerRef.current) {
                 clearInterval(timerRef.current);
                 timerRef.current = null;
+            }
+
+            if (onFinalizar) {
+                onFinalizar(tempo);
             }
         }
 

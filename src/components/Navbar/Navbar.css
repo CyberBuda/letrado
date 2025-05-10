@@ -1,126 +1,197 @@
 .menu-botao {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 20px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-    color: var(--text);
-  }
-  
-  .menu-lateral {
-    position: fixed;
-    top: 0;
-    left: -300px;
-    height: 100%;
-    width: 300px;
-    background-color: var(--card);
-    box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-    transition: left 0.3s ease;
-    z-index: 1002;
-    color: var(--text);
-  }
-  
-  .menu-lateral.aberto {
-    left: 0;
-  }
-  
-  .menu-lateral ul {
-    list-style: none;
-    padding: 1rem;
-    gap: 1rem;
-    margin-top: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .menu-lateral li {
-    text-align: center;
-    padding: .5rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-    width: 90%;
-    text-align: left;
-    border-radius: .5rem;
-  }
-  
-  .menu-lateral li:hover {
-    background-color: var(--hover);
-  }
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  color: var(--text);
+}
 
-  .botao-fechar {
-    position: absolute;
-    top: .1rem;
-    right: 10px;
-    font-size: 24px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: red
-  }
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  height: 100%;
+  width: 300px;
+  background-color: var(--card);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  transition: left 0.3s ease;
+  z-index: 1002;
+  color: var(--text);
+}
 
-  .botao-fechar :focus {
-    border: none;
-  }
-  
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0,0,0,0.3);
-    z-index: 1000;
-  }
+.menu-lateral.aberto {
+  left: 0;
+}
 
-  .switch-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-  }
-  
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 26px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    border-radius: 34px;
-    transition: 0.4s;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    border-radius: 50%;
-    transition: 0.4s;
-  }
-  
-  input:checked + .slider {
-    background-color: var(--accent, #4caf50);
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(24px);
-  }
+.menu-lateral ul {
+  list-style: none;
+  padding: 1rem;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-lateral li {
+  text-align: center;
+  padding: .5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 90%;
+  text-align: left;
+  border-radius: .5rem;
+}
+
+.menu-lateral li:hover {
+  background-color: var(--hover);
+}
+
+.estatisticas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: none
+}
+
+.grafico-vitorias {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+  background-color: var(--card);
+  border-radius: 12px;
+  width: 85%;
+  margin: 0 auto;
+}
+
+.titulo-grafico {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--text-secondary);
+  padding-bottom: 0.3rem;
+  color: var(--text);
+}
+
+.linha-vitoria {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tentativa-label {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #444;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.barra-container {
+  flex: 1;
+  background-color: #222;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 1.5rem;
+}
+
+.barra {
+  height: 100%;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  border-radius: 20px;
+  transition: width 0.3s ease-in-out;
+  color: white;
+  font-weight: bold;
+}
+
+.botao-fechar {
+  position: absolute;
+  top: .1rem;
+  right: 10px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: red
+}
+
+.botao-fechar :focus {
+  border: none;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.switch-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked+.slider {
+  background-color: var(--accent, #4caf50);
+}
+
+input:checked+.slider:before {
+  transform: translateX(24px);
+}
