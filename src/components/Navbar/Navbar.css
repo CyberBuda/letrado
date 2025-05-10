@@ -116,12 +116,16 @@
   background-color: green;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   padding-right: 0.5rem;
   border-radius: 20px;
   transition: width 0.3s ease-in-out;
   color: white;
   font-weight: bold;
+  justify-content: right;
+}
+
+.qtd {
+  padding: .5rem;
 }
 
 .botao-fechar {
