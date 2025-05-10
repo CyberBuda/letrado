@@ -1,5 +1,5 @@
 import EstatisticasJogo from "../models/EstatisticasJogo";
-import './modalEstatisticas.css';
+import './ModalEstatisticas.css';
 
 interface ModalEstatisticasProps {
     estatisticas: EstatisticasJogo;
