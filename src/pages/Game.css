@@ -56,6 +56,9 @@ button {
 
 .botao-jogar-novamente {
   background-color:#1976d2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .botao-jogar-novamente:hover {
@@ -65,6 +68,9 @@ button {
 
 .botao-estatisticas {
   background-color:#707070;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .botao-estatisticas:hover {

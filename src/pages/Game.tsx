@@ -6,6 +6,7 @@ import Letra from '../models/Letra'
 import { EstadoDoJogo } from '../models/EstadoDoJogo';
 import { listaDePalavrasSorteaveis } from '../assets/palavras-sorteaveis';
 import { listaDePalavrasVerificaveis } from '../assets/palavras-verificaveis';
+import { ChartBarIncreasing, RotateCcw } from 'lucide-react';
 import Timer from '../components/Timer/Timer'
 
 export default function Game() {
@@ -186,7 +187,7 @@ export default function Game() {
                         Jogar Novamente
                     </button>
                     <button onClick={() => ''} className='botao-estatisticas'>
-                       Ver Estatísticas
+                       <ChartBarIncreasing size='16px'/>Ver Estatísticas
                     </button>
                 </div>
                 }

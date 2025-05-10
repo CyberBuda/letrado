@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { House, Plus, SunMoon, AlarmClock, SquareCheck, SquareX } from 'lucide-react';
+import { House, Plus, SunMoon, AlarmClock, SquareCheck, SquareX, ChartBarIncreasing } from 'lucide-react';
 import './Navbar.css';
 import { useEstatisticas } from '../../context/EstatisticasContext';
 
@@ -47,8 +47,9 @@ export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema, abert
                         <span>{'🌙'}</span>
                     </li>
                 </ul>
+                <hr />
                 <ul className='estatisticas'>
-                    <li><strong>Estatísticas:</strong></li>
+                    <li><strong><ChartBarIncreasing/>Estatísticas:</strong></li>
                     <li><SquareCheck color='green'/><strong>Vitórias:</strong> {vitoriasTotais}</li>
                     <li><SquareX color='red' /><strong>Derrotas:</strong> {estatisticas.derrotas}</li>
                     <li><AlarmClock color='blue' /><strong>Tempo médio: </strong> {mediaTempo} segundos</li>
