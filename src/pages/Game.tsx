@@ -8,7 +8,8 @@ import { listaDePalavrasSorteaveis } from '../assets/palavras-sorteaveis';
 import { listaDePalavrasVerificaveis } from '../assets/palavras-verificaveis';
 import { ChartBarIncreasing } from 'lucide-react';
 import Timer from '../components/Timer/Timer'
-import { EstatisticasJogo } from '../context/EstatisticasContext'
+import { EstatisticasJogo, useEstatisticas } from '../context/EstatisticasContext'
+import { ModalEstatisticas } from './ModalEstatistcas'
 
 export default function Game() {
     const tentativasMaximas = 6;
@@ -19,7 +20,7 @@ export default function Game() {
         derrota: '/imagens/gato-missil.gif',
     }
 
-    //const estatisticas = useEstatisticas();
+    const { estatisticas, setEstatisticas } = useEstatisticas();
 
     const [estadoDoJogo, setEstadoDoJogo] = useState<EstadoDoJogo>('jogando')
     const [tentativas, setTentativas] = useState<Letra[][]>(Array(tentativasMaximas).fill(null).map(() => Array(5).fill('')))
@@ -29,6 +30,7 @@ export default function Game() {
     const [reset, setReset] = useState<Boolean>(false)
     const [erro, setErro] = useState('')
     const [tempoFinal, setTempoFinal] = useState(0)
+    const [mostrarEstatisticas, setMostrarEstatisticas] = useState(false);
 
     const jogarNovamente = () => {
         setTentativas(Array(tentativasMaximas).fill(null).map(() => Array(5).fill({ valor: '', estado: null })))
@@ -122,10 +124,6 @@ export default function Game() {
             const resultado = gerarResultadoVitoria(tentativaAtual)
             aplicarResultadoNaLinha(novasTentativas, resultado)
             setTentativas(novasTentativas)
-            setTempoFinal((prevTempo) => {
-                atualizarEstatisticas(true, linhaAtual + 1, tempoFinal);
-                return prevTempo;
-            });
             setEstadoDoJogo('vitoria')
             return
         }
@@ -149,12 +147,16 @@ export default function Game() {
         estatisticas.totalTempo += Number.isFinite(tempoEmSegundos) ? tempoEmSegundos : 0;
 
         if (vitoria && tentativasUsadas >= 1 && tentativasUsadas <= 6) {
-            estatisticas.vitoriasPorTentativa[tentativasUsadas - 1] += 1;
+            const index = tentativasUsadas - 1;
+            if (estatisticas.vitoriasPorTentativa[index] !== undefined) {
+                estatisticas.vitoriasPorTentativa[index] += 1;
+            }
         } else if (!vitoria) {
             estatisticas.derrotas += 1;
         }
 
         localStorage.setItem("estatisticasLetrado", JSON.stringify(estatisticas));
+        setEstatisticas(estatisticas);
     };
 
     useEffect(() => {
@@ -162,7 +164,6 @@ export default function Game() {
 
         if (linhaAtual >= tentativasMaximas) {
             setTempoFinal((prevTempo) => {
-                atualizarEstatisticas(false, linhaAtual + 1, prevTempo);
                 return prevTempo;
             });
             setEstadoDoJogo('derrota');
@@ -225,13 +226,19 @@ export default function Game() {
                         <button onClick={jogarNovamente} className='botao-jogar-novamente'>
                             Jogar Novamente
                         </button>
-                        <button onClick={() => ''} className='botao-estatisticas'>
+                        <button onClick={() => setMostrarEstatisticas(true)} className='botao-estatisticas'>
                             <ChartBarIncreasing size='16px' />Ver Estatísticas
                         </button>
                     </div>
                 }
 
             </div>
+            {mostrarEstatisticas &&
+                <ModalEstatisticas
+                    estatisticas={estatisticas}
+                    onFechar={() => setMostrarEstatisticas(false)}
+                />
+            }
         </>
     );
 }

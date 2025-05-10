@@ -14,9 +14,20 @@ const estatisticasIniciais: EstatisticasJogo = {
     derrotas: 0,
 };
 
-const EstatisticasContext = createContext<EstatisticasJogo>(estatisticasIniciais);
+interface EstatisticasContextType {
+    estatisticas: EstatisticasJogo;
+    setEstatisticas: React.Dispatch<React.SetStateAction<EstatisticasJogo>>;
+}
 
-export const useEstatisticas = () => useContext(EstatisticasContext);
+const EstatisticasContext = createContext<EstatisticasContextType | undefined>(undefined);
+
+export const useEstatisticas = () => {
+    const context = useContext(EstatisticasContext);
+    if (!context) {
+        throw new Error("useEstatisticas deve ser usado dentro de EstatisticasProvider");
+    }
+    return context;
+};
 
 export const EstatisticasProvider = ({ children }: { children: React.ReactNode }) => {
     const [estatisticas, setEstatisticas] = useState<EstatisticasJogo>(estatisticasIniciais);
@@ -31,7 +42,7 @@ export const EstatisticasProvider = ({ children }: { children: React.ReactNode }
     }, []);
 
     return (
-        <EstatisticasContext.Provider value={estatisticas}>
+        <EstatisticasContext.Provider value={{ estatisticas, setEstatisticas }}>
             {children}
         </EstatisticasContext.Provider>
     );

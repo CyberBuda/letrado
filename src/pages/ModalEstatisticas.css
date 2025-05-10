@@ -1,0 +1,22 @@
+.modal-estatisticas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-estatisticas .conteudo {
+  background: var(--card);
+  padding: 2rem;
+  border-radius: 12px;
+  color: var(--text);
+  width: 80%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}

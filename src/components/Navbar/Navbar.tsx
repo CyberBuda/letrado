@@ -23,7 +23,7 @@ export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema, abert
     };
 
     //Controle de estatisticas
-    const estatisticas = useEstatisticas();
+    const { estatisticas } = useEstatisticas();
     const mediaTempo = estatisticas.totalJogos > 0 ? Math.round(estatisticas.totalTempo / estatisticas.totalJogos) : 0;
 
     return (
@@ -48,7 +48,7 @@ export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema, abert
                 </ul>
                 <ul className='estatisticas'>
                     <li><strong><ChartBarIncreasing />Estatísticas:</strong></li>
-                    <li><AlarmClock color='blue' /><strong>Tempo médio: </strong> {mediaTempo} segundos</li>
+                    <li><AlarmClock color='blue' /><strong>Tempo médio: </strong> {mediaTempo}seg.</li>
                     <li><SquareX color='red' /><strong>Derrotas:</strong> {estatisticas.derrotas}</li>
                 </ul>
                 <div className="grafico-vitorias">
