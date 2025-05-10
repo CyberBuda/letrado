@@ -24,7 +24,6 @@ export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema, abert
 
     //Controle de estatisticas
     const estatisticas = useEstatisticas();
-    const vitoriasTotais = estatisticas.vitoriasPorTentativa.reduce((a, b) => a + b, 0);
     const mediaTempo = estatisticas.totalJogos > 0 ? Math.round(estatisticas.totalTempo / estatisticas.totalJogos) : 0;
 
     return (

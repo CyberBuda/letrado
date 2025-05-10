@@ -8,7 +8,7 @@ import { listaDePalavrasSorteaveis } from '../assets/palavras-sorteaveis';
 import { listaDePalavrasVerificaveis } from '../assets/palavras-verificaveis';
 import { ChartBarIncreasing } from 'lucide-react';
 import Timer from '../components/Timer/Timer'
-import { EstatisticasJogo, useEstatisticas } from '../context/EstatisticasContext'
+import { EstatisticasJogo } from '../context/EstatisticasContext'
 
 export default function Game() {
     const tentativasMaximas = 6;
@@ -19,7 +19,7 @@ export default function Game() {
         derrota: '/imagens/gato-missil.gif',
     }
 
-    const estatisticas = useEstatisticas();
+    //const estatisticas = useEstatisticas();
 
     const [estadoDoJogo, setEstadoDoJogo] = useState<EstadoDoJogo>('jogando')
     const [tentativas, setTentativas] = useState<Letra[][]>(Array(tentativasMaximas).fill(null).map(() => Array(5).fill('')))
@@ -123,7 +123,7 @@ export default function Game() {
             aplicarResultadoNaLinha(novasTentativas, resultado)
             setTentativas(novasTentativas)
             setTempoFinal((prevTempo) => {
-            atualizarEstatisticas(true, linhaAtual + 1, prevTempo);
+            atualizarEstatisticas(true, linhaAtual + 1, tempoFinal);
             return prevTempo;
             });
             setEstadoDoJogo('vitoria')
