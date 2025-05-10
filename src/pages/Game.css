@@ -12,7 +12,6 @@
   text-align: center;
   margin: 0 auto;
   margin-bottom: 0;
-  min-height: 100dvh; /* viewport real */
   max-width: 100vh;
   width: 100%;
   box-sizing: border-box;
@@ -71,6 +70,15 @@ button {
 .botao-estatisticas:hover {
   background-color:#afafaf;
   
+}
+
+.footer-game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: .5rem;
+  font-size: 14px;
+  gap: 1rem;
 }
 
 .mensagem-erro {

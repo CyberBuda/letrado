@@ -181,14 +181,14 @@ export default function Game() {
                 }
 
                 {estadoDoJogo !== 'jogando' &&
-                <>
+                <div className="footer-game">
                     <button onClick={jogarNovamente} className='botao-jogar-novamente'>
                         Jogar Novamente
                     </button>
                     <button onClick={() => ''} className='botao-estatisticas'>
-                        Estatísticas (em breve)
+                       Ver Estatísticas
                     </button>
-                </>
+                </div>
                 }
 
             </div>
