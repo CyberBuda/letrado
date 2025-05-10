@@ -28,6 +28,8 @@ export const listaDePalavrasVerificaveis = [
 "AVIÃO",
 "ÁVIDO",
 "AVISA",
+"ASTRO",
+"ATLAS",
 "AVISE",
 "AVISO",
 "AXILA",

@@ -64,6 +64,15 @@ button {
   
 }
 
+.botao-estatisticas {
+  background-color:#707070;
+}
+
+.botao-estatisticas:hover {
+  background-color:#afafaf;
+  
+}
+
 .mensagem-erro {
   background-color: #f44336;
   color: white;

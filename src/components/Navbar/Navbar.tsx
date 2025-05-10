@@ -24,7 +24,7 @@ export const NavbarLateral: React.FC<Props> = ({ temaEscuro, alternarTema, abert
     return (
         <>
             <button className="menu-botao" onClick={alternarMenu}>
-                ☰ Menu
+                ☰
             </button>
 
             <div className={`menu-lateral ${aberto ? 'aberto' : ''}`}>
