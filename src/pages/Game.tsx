@@ -18,12 +18,12 @@ export default function Game() {
     }
 
     const [estadoDoJogo, setEstadoDoJogo] = useState<EstadoDoJogo>('jogando')
-    const [tentativas, setTentativas] = useState<Letra[][]>(Array(tentativasMaximas).fill(null).map(() => Array(5).fill(''))) //Cria um array vazio de 6 elementos e preenche todos com ''. Cada elemento será uma linha
+    const [tentativas, setTentativas] = useState<Letra[][]>(Array(tentativasMaximas).fill(null).map(() => Array(5).fill('')))
     const [tentativaAtual, setTentativaAtual] = useState<Letra[]>(Array(5).fill(''))
     const [linhaAtual, setLinhaAtual] = useState(0)
     const [palavraSecreta, setPalavraSecreta] = useState<String>('')
     const [reset, setReset] = useState<Boolean>(false)
-    const [erro, setErro] = useState('');
+    const [erro, setErro] = useState('')
 
     const jogarNovamente = () => {
         setTentativas(Array(tentativasMaximas).fill(null).map(() => Array(5).fill({ valor: '', estado: null })))
