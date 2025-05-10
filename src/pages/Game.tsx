@@ -123,8 +123,8 @@ export default function Game() {
             aplicarResultadoNaLinha(novasTentativas, resultado)
             setTentativas(novasTentativas)
             setTempoFinal((prevTempo) => {
-            atualizarEstatisticas(true, linhaAtual + 1, tempoFinal);
-            return prevTempo;
+                atualizarEstatisticas(true, linhaAtual + 1, tempoFinal);
+                return prevTempo;
             });
             setEstadoDoJogo('vitoria')
             return
@@ -146,7 +146,7 @@ export default function Game() {
         const estatisticas: EstatisticasJogo = JSON.parse(dados);
 
         estatisticas.totalJogos += 1;
-        estatisticas.totalTempo += tempoEmSegundos;
+        estatisticas.totalTempo += Number.isFinite(tempoEmSegundos) ? tempoEmSegundos : 0;
 
         if (vitoria && tentativasUsadas >= 1 && tentativasUsadas <= 6) {
             estatisticas.vitoriasPorTentativa[tentativasUsadas - 1] += 1;
@@ -162,12 +162,21 @@ export default function Game() {
 
         if (linhaAtual >= tentativasMaximas) {
             setTempoFinal((prevTempo) => {
-            atualizarEstatisticas(false, linhaAtual + 1, prevTempo);
-            return prevTempo;
+                atualizarEstatisticas(false, linhaAtual + 1, prevTempo);
+                return prevTempo;
             });
             setEstadoDoJogo('derrota');
         }
     }, [linhaAtual])
+
+    useEffect(() => {
+        if (estadoDoJogo === 'vitoria' || estadoDoJogo === 'derrota') {
+            if (tempoFinal > 0) {
+                const vitoria = estadoDoJogo === 'vitoria';
+                atualizarEstatisticas(vitoria, linhaAtual + 1, tempoFinal);
+            }
+        }
+    }, [estadoDoJogo, tempoFinal]);
 
 
     useEffect(() => {
@@ -182,7 +191,7 @@ export default function Game() {
             <div className="game-container">
                 <img src={imagens[estadoDoJogo]} className='imagem' />
 
-                <Timer estadoDoJogo={estadoDoJogo} reset={reset} onFinalizar={(tempo) => setTempoFinal(tempo)} />
+                <Timer estadoDoJogo={estadoDoJogo} reset={reset} onFinalizar={setTempoFinal} />
 
                 {estadoDoJogo === 'vitoria' && <h2>🎉 Você acertou a palavra!</h2>}
                 {estadoDoJogo === 'derrota' && <h2>😢 Você perdeu! A palavra era: <br />{palavraSecreta}</h2>}

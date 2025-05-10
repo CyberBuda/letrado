@@ -11,6 +11,7 @@ interface TimerProps {
 function Timer({ estadoDoJogo, reset, onFinalizar }: TimerProps) {
 
     const [tempo, setTempo] = useState(0);
+    const tempoRefAtual = useRef(tempo);
     const timerRef = useRef<number | null>(null);
 
     const formatarTempo = (segundos: number) => {
@@ -18,6 +19,10 @@ function Timer({ estadoDoJogo, reset, onFinalizar }: TimerProps) {
         const seg = (segundos % 60).toString().padStart(2, '0');
         return `${min}:${seg}`;
     };
+
+    useEffect(() => {
+        tempoRefAtual.current = tempo;
+    }, [tempo]);
 
     useEffect(() => {
         if (estadoDoJogo === 'jogando') {
@@ -31,7 +36,8 @@ function Timer({ estadoDoJogo, reset, onFinalizar }: TimerProps) {
             }
 
             if (onFinalizar) {
-                onFinalizar(tempo);
+                console.log(tempoRefAtual.current)
+                onFinalizar(tempoRefAtual.current);
             }
         }
 

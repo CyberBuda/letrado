@@ -75,6 +75,7 @@
 }
 
 .titulo-grafico {
+  gap: .5rem;
   display: flex;
   align-items: center;
   font-weight: bold;
