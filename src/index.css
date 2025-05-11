@@ -15,6 +15,7 @@
   --card: #f5f5f5;
   --hover: #e0e0e0;
   --accent: #4caf50;
+  --bg-barra: rgb(216, 216, 216);
 }
 
 html {
@@ -56,6 +57,7 @@ body[data-theme='dark'] {
   --card: #2a2a2a;
   --hover: #333333;
   --accent: #81c784;
+  --bg-barra: rgb(80, 80, 80);
 }
 
 button {

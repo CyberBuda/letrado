@@ -122,7 +122,7 @@
 
 .barra-container {
   flex: 1;
-  background-color: #222;
+  background-color: var(--bg-barra, #444);
   border-radius: 20px;
   overflow: hidden;
   height: 1.5rem;
