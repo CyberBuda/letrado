@@ -11,9 +11,9 @@
 }
 
 .menu-lateral {
-  position: fixed;
+  position: fixed; /* Garante que o menu não afete o fluxo do layout */
   top: 0;
-  left: -300px;
+  left: -300px; /* Esconde o menu fora da tela */
   height: 100%;
   width: 300px;
   background-color: var(--card);
@@ -22,7 +22,6 @@
   z-index: 1002;
   color: var(--text);
   overflow: auto;
-  
 }
 
 .menu-lateral.aberto {
