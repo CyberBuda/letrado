@@ -36,7 +36,6 @@ function Timer({ estadoDoJogo, reset, onFinalizar }: TimerProps) {
             }
 
             if (onFinalizar) {
-                console.log(tempoRefAtual.current)
                 onFinalizar(tempoRefAtual.current);
             }
         }
